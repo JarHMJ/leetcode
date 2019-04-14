@@ -28,7 +28,7 @@ class Solution:
 
     def minNumberInRotateArray(self, rotateArray):
         # write code here
-        # 递归
+        # 递归  最好用迭代，递归可能调用栈溢出或者超时
         if not rotateArray:
             return 0
         front = 0
