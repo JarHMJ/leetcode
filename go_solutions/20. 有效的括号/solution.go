@@ -61,11 +61,11 @@ func isValid(s string) bool {
 	stack := NewStack()
 
 	for _, char := range s {
-		if string(char) == ")" && stack.Peek().(string) == "(" {
+		if string(char) == ")" && stack.Peek() != nil && stack.Peek().(string) == "(" {
 			stack.Pop()
-		} else if string(char) == "]" && stack.Peek().(string) == "[" {
+		} else if string(char) == "]" && stack.Peek() != nil && stack.Peek().(string) == "[" {
 			stack.Pop()
-		} else if string(char) == "}" && stack.Peek().(string) == "{" {
+		} else if string(char) == "}" && stack.Peek() != nil && stack.Peek().(string) == "{" {
 			stack.Pop()
 
 		} else {
