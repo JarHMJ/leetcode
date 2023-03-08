@@ -57,26 +57,51 @@ func (s *Stack) Push(value interface{}) {
 }
 
 // isValid sa
+//func isValid(s string) bool {
+//	stack := NewStack()
+//
+//	for _, char := range s {
+//		if string(char) == ")" && stack.Peek() != nil && stack.Peek().(string) == "(" {
+//			stack.Pop()
+//		} else if string(char) == "]" && stack.Peek() != nil && stack.Peek().(string) == "[" {
+//			stack.Pop()
+//		} else if string(char) == "}" && stack.Peek() != nil && stack.Peek().(string) == "{" {
+//			stack.Pop()
+//
+//		} else {
+//			stack.Push(string(char))
+//		}
+//	}
+//	//for _, char := range "aaaa" {
+//	//	fmt.Printf("%+v", string(char))
+//	//}
+//	if stack.Peek() != nil {
+//		return false
+//	}
+//	return true
+//}
+
+// 官方解
 func isValid(s string) bool {
-	stack := NewStack()
-
-	for _, char := range s {
-		if string(char) == ")" && stack.Peek() != nil && stack.Peek().(string) == "(" {
-			stack.Pop()
-		} else if string(char) == "]" && stack.Peek() != nil && stack.Peek().(string) == "[" {
-			stack.Pop()
-		} else if string(char) == "}" && stack.Peek() != nil && stack.Peek().(string) == "{" {
-			stack.Pop()
-
-		} else {
-			stack.Push(string(char))
-		}
-	}
-	//for _, char := range "aaaa" {
-	//	fmt.Printf("%+v", string(char))
-	//}
-	if stack.Peek() != nil {
+	n := len(s)
+	if n%2 == 1 {
 		return false
 	}
-	return true
+	pairs := map[byte]byte{
+		')': '(',
+		']': '[',
+		'}': '{',
+	}
+	stack := []byte{}
+	for i := 0; i < n; i++ {
+		if pairs[s[i]] > 0 {
+			if len(stack) == 0 || stack[len(stack)-1] != pairs[s[i]] {
+				return false
+			}
+			stack = stack[:len(stack)-1]
+		} else {
+			stack = append(stack, s[i])
+		}
+	}
+	return len(stack) == 0
 }
